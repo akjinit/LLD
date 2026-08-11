@@ -1,4 +1,8 @@
 package TicTacToe;
 
-public class Symbol {
+
+public enum Symbol {
+    X,
+    O,
+    EMPTY
 }

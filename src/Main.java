@@ -1,5 +1,11 @@
+import TicTacToe.HumanPlayerStrategy;
+import TicTacToe.TicTacToeGame;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello, World!");
+        TicTacToeGame game = new TicTacToeGame(new HumanPlayerStrategy("Akshat"), new HumanPlayerStrategy("Ifra"),
+                3, 3
+        );
+        game.play();
     }
 }
