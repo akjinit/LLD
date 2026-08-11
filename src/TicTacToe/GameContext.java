@@ -3,7 +3,7 @@ package TicTacToe;
 public class GameContext {
     private GameState currentState;
     public GameContext(Symbol symbol){
-        currentState = symbol == Symbol.X ? new XTurnState() : new OWonState();
+        currentState = symbol == Symbol.X ? new XTurnState() : new OTurnState();
     }
 
     public void setCurrentState(GameState currentState) {

@@ -26,44 +26,53 @@ public class Board {
     }
 
     public void checkGameState(GameContext context) {
+        boolean hasWon = false;
+        // check rows
         for (int i = 0; i < rows; i++) {
             if (isWinningLine(grid[i])) {
-                context.next( true, false);
-                return;
+                hasWon = true;
+                break;
             }
         }
-        for (int i = 0; i < columns; i++) {
-            Symbol[] column = new Symbol[rows];
-            for (int j = 0; j < rows; j++) {
-                column[j] = grid[j][i];
+        // check columns
+        if (!hasWon) {
+            for (int i = 0; i < columns; i++) {
+                Symbol[] column = new Symbol[rows];
+                for (int j = 0; j < rows; j++) {
+                    column[j] = grid[j][i];
+                }
+                if (isWinningLine(column)) {
+                    hasWon = true;
+                    break;
+                }
             }
-            if (isWinningLine(column)) {
-                context.next( true, false);
-                return;
+        }
+
+        // check diagonals
+        if (!hasWon) {
+            Symbol[] diagonal1 = new Symbol[Math.min(rows, columns)];
+            Symbol[] diagonal2 = new Symbol[Math.min(rows, columns)];
+            for (int i = 0; i < Math.min(rows, columns); i++) {
+                diagonal1[i] = grid[i][i];
+                diagonal2[i] = grid[i][columns - 1 - i];
+            }
+            if (isWinningLine(diagonal1) || isWinningLine(diagonal2)) {
+                hasWon = true;
             }
         }
 
-
-        Symbol[] diagonal1 = new Symbol[Math.min(rows, columns)];
-        Symbol[] diagonal2 = new Symbol[Math.min(rows, columns)];
-        for (int i = 0; i < Math.min(rows, columns); i++) {
-            diagonal1[i] = grid[i][i];
-            diagonal2[i] = grid[i][columns - 1 - i];
-        }
-
-        if (isWinningLine(diagonal1)) {
-            context.next( true, false);
-            return;
-        }
-        if (isWinningLine(diagonal2)) {
-            context.next( true, false);
+        if (hasWon) {
+            context.next(true, false);
             return;
         }
 
-        if(isDraw()) {
-            context.next(false,true);
+        if (isDraw()) {
+            context.next(false, true);
             return;
         }
+
+        // No win or draw: advance turn
+        context.next(false, false);
     }
 
     public boolean isDraw(){//checks no one is empty
