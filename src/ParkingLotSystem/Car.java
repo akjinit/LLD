@@ -1,4 +1,7 @@
 package ParkingLotSystem;
 
-public class CarVehicle {
+public class Car extends Vehicle{
+    public Car(ParkingFeeStrategy parkingFeeStrategy, String licensePlate) {
+        super(parkingFeeStrategy, VehicleType.CAR, licensePlate);
+    }
 }
